@@ -4,6 +4,7 @@ import argparse
 import torch
 from PIL import Image
 from diffusers import StableDiffusionInpaintPipelineLegacy, AutoencoderKL, DPMSolverMultistepScheduler, DDIMScheduler
+from ip_adapter.ip_adapter_faceid import IPAdapterFaceIDPlus
 from ip_adapter.ip_adapter_faceid_separate import IPAdapterFaceID
 
 from config import Config
@@ -14,6 +15,12 @@ def run_pipeline(config):
     face_pipeline = FacePipeline(config)
     input_images = os.listdir(config.source_dir)
     n_references = len(input_images)
+
+    print(f"Number of reference images:", n_references)
+    if n_references == 1:
+        print("Using IPAdapter FaceID Plus")
+    else:
+        print("Using IPAdapter FaceID Portrait")
 
     face_embeddings = []
     for input_image in input_images:
@@ -52,21 +59,39 @@ def run_pipeline(config):
         feature_extractor=None,
         safety_checker=None
     )
+    
+    if n_references == 1:
+        ip_model = IPAdapterFaceID(pipe, config.ip_portrait_path, config.device, num_tokens=16, n_cond=n_references)
+        images = ip_model.generate(
+            prompt=config.prompt,
+            negative_prompt=config.negative_prompt,
+            faceid_embeds=face_embeddings,
+            image=target_image['face_crop'],
+            mask_image=target_image['face_mask'],
+            num_inference_steps=config.num_inference_steps,
+            guidance_scale=config.guidance_scale,
+            strength=config.strength,
+            seed=config.diffusion_seed,
+            num_samples=1
+        )
+    else:
+        ip_model = IPAdapterFaceIDPlus(pipe, config.image_encoder_path, config.ip_plus_path, config.device)
 
-    ip_model = IPAdapterFaceID(pipe, config.ip_ckpt, config.device, num_tokens=16, n_cond=n_references)
-
-    images = ip_model.generate(
-        prompt=config.prompt,
-        negative_prompt=config.negative_prompt,
-        faceid_embeds=face_embeddings,
-        image=target_image['face_crop'],
-        mask_image=target_image['face_mask'],
-        num_inference_steps=config.num_inference_steps,
-        guidance_scale=config.guidance_scale,
-        strength=config.strength,
-        seed=config.diffusion_seed,
-        num_samples=1
-    )
+        images = ip_model.generate(
+             prompt=config.prompt,
+            negative_prompt=config.negative_prompt,
+            face_image=source_image['face'],
+            faceid_embeds=face_embeddings,
+            image=target_image['face_crop'],
+            mask_image=target_image['face_mask'],
+            shortcut=False,
+            s_scale=1.0,
+            num_inference_steps=config.num_inference_steps,
+            guidance_scale=config.guidance_scale,
+            strength=config.strength,
+            seed=config.diffusion_seed,
+            num_samples=1
+        )
 
     images = [face_pipeline.project_face(target_image, image) for image in images]
 
