@@ -17,12 +17,13 @@
    - `pip install git+https://github.com/tencent-ailab/IP-Adapter.git`
 4. (Optional) Install [GFPGAN](https://github.com/TencentARC/GFPGAN) for face enhancement:
    - `pip install git+https://github.com/TencentARC/GFPGAN.git`
+   - The `basicsr` repository hasn't been updated for quite some time now, so with newer versions of `torchvision` you might run into the [following problem](https://github.com/AUTOMATIC1111/stable-diffusion-webui/issues/13985)
 
 ## Required model weights
 
 Most of the weights have embedded URLs and will be download automatically but you have to download the IP Adapter weights manually:
 
-- IP-Adapter-FaceID-Portrait - https://huggingface.co/h94/IP-Adapter-FaceID/blob/main/ip-adapter-faceid-portrait_sd15.bin
+- [IP-Adapter-FaceID-Portrait](https://huggingface.co/h94/IP-Adapter-FaceID/blob/main/ip-adapter-faceid-portrait_sd15.bin)
 
 Create and place the weights to 'ip_adapter/weights' directory or change the directory in config settings.
 
