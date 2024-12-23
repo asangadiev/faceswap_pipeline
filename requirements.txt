@@ -1,0 +1,12 @@
+basicsr==1.4.2
+diffusers==0.31.0
+facexlib==0.3.0
+insightface==0.7.3
+matplotlib==3.10.0
+numpy==2.2.1
+opencv_python==4.10.0.84
+opencv_python_headless==4.10.0.84
+Pillow==11.0.0
+pyfacer==0.0.4
+realesrgan==0.3.0
+torch==2.5.1
