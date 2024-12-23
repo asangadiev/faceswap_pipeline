@@ -1,9 +1,7 @@
 import os
 import argparse
 
-import cv2
 import torch
-import numpy as np
 from PIL import Image
 from diffusers import StableDiffusionInpaintPipelineLegacy, AutoencoderKL, DPMSolverMultistepScheduler, DDIMScheduler
 from ip_adapter.ip_adapter_faceid_separate import IPAdapterFaceID
@@ -19,7 +17,7 @@ def run_pipeline(config):
 
     face_embeddings = []
     for input_image in input_images:
-        source_image = face_pipeline.get_source_face(fr'C:\Users\asang\Documents\Study\GlamAI\data\reference\{input_image}')
+        source_image = face_pipeline.get_source_face(os.path.join(config.source_dir, input_image))
         face_embeddings.append(source_image['face_embeddings'].unsqueeze(0))
 
     face_embeddings = torch.cat(face_embeddings, dim=1)
