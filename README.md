@@ -21,7 +21,7 @@
 
 ## Required model weights
 
-Most of the weights have embedded URLs and will be download automatically but you have to download the IP Adapter weights manually:
+Most of the weights have embedded URLs and will be downloaded automatically but you have to download the IP Adapter weights manually:
 
 - [IP-Adapter-FaceID-Portrait](https://huggingface.co/h94/IP-Adapter-FaceID/blob/main/ip-adapter-faceid-portrait_sd15.bin)
 
