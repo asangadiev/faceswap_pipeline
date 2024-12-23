@@ -10,7 +10,7 @@ class Config:
         self.face_parser = "farl/celebm/448"
         self.base_model = "SG161222/Realistic_Vision_V4.0_noVAE"
         self.vae_model = "stabilityai/sd-vae-ft-mse"
-        self.image_encoder_path = os.path.join(src_dir, "ip_adapter", "weights", "image_encoder")
+        #self.image_encoder_path = os.path.join(src_dir, "ip_adapter", "weights", "image_encoder")
         self.ip_ckpt = os.path.join(src_dir, "ip_adapter", "weights", "ip-adapter-faceid-portrait_sd15.bin")
         self.device = "cuda"
 
