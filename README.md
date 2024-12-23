@@ -44,4 +44,8 @@ You can change the used models as well as settings via the `config.py`.
 - Single Reference:
   | Input           | Target          | Output          |
   |:---------------:|:---------------:|:---------------:|
-  | <img src="assets/single_ref_input.jpg" alt="Alt text" width="300">| <img src="assets/target.jpg" alt="Alt text" width="300">|<img src="assets/single_ref.jpg" alt="Alt text" width="300">|
+  | <img src="assets/single_ref_input.jpg" width="300">| <img src="assets/target.jpg" width="300">|<img src="assets/single_ref.png" width="300">|
+- Multi Reference:
+  | Target | Output |
+  |:--:|:--:|
+  |<img src="assets/target.jpg" width="300">|<img src="assets/multi_ref.png" width="300">|
