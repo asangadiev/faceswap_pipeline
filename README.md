@@ -30,6 +30,7 @@ Create and place the weights to 'ip_adapter/weights' directory or change the dir
 ## How to use
 
 For a quick start run the following after installing all the prerequisites and downloading weights:
+
 `python diffusion_pipeline.py --source_dir <your face photos> --target_image <your target image> --output_dir <your output directory>`
 
 You can change the used models as well as settings via the `config.py`.
