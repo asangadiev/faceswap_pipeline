@@ -9,19 +9,26 @@
 
 ## Installation
 
-1. Install [Insight Face](https://github.com/deepinsight/insightface):
-   `pip install insightface`
-3. 
+1. Clone the repository:
+   - `git clone https://github.com/asangt/faceswap_pipeline.git`
+2. Install prerequisites by running:
+   - `pip install -r requirements.txt`
+3. Install [IP Adapter](https://github.com/tencent-ailab/IP-Adapter):
+   - `pip install git+https://github.com/tencent-ailab/IP-Adapter.git`
+4. (Optional) Install [GFPGAN](https://github.com/TencentARC/GFPGAN) for face enhancement:
+   - `pip install git+https://github.com/TencentARC/GFPGAN.git`
 
-## Features
+## Required model weights
 
-- Face detection and landmark analysis
-- Face parsing and segmentation
-- Face restoration and enhancement
-- Background upsampling (optional)
-- Face alignment and cropping
-- Mask generation and blending
+Most of the weights have embedded URLs and will be download automatically but you have to download the IP Adapter weights manually:
 
-## Dependencies
+- IP-Adapter-FaceID-Portrait - https://huggingface.co/h94/IP-Adapter-FaceID/blob/main/ip-adapter-faceid-portrait_sd15.bin
 
-Install the following Python packages:
+Create and place the weights to 'ip_adapter/weights' directory or change the directory in config settings.
+
+## How to use
+
+For a quick start run the following after installing all the prerequisites and downloading weights:
+`python diffusion_pipeline.py --source_dir <your face photos> --target_image <your target image> --output_dir <your output directory>`
+
+You can change the used models as well as settings via the `config.py`.
