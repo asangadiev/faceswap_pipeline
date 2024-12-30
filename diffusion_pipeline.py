@@ -61,22 +61,7 @@ def run_pipeline(config):
     )
     
     if n_references == 1:
-        ip_model = IPAdapterFaceID(pipe, config.ip_portrait_path, config.device, num_tokens=16, n_cond=n_references)
-        images = ip_model.generate(
-            prompt=config.prompt,
-            negative_prompt=config.negative_prompt,
-            faceid_embeds=face_embeddings,
-            image=target_image['face_crop'],
-            mask_image=target_image['face_mask'],
-            num_inference_steps=config.num_inference_steps,
-            guidance_scale=config.guidance_scale,
-            strength=config.strength,
-            seed=config.diffusion_seed,
-            num_samples=1
-        )
-    else:
         ip_model = IPAdapterFaceIDPlus(pipe, config.image_encoder_path, config.ip_plus_path, config.device)
-
         images = ip_model.generate(
              prompt=config.prompt,
             negative_prompt=config.negative_prompt,
@@ -86,6 +71,20 @@ def run_pipeline(config):
             mask_image=target_image['face_mask'],
             shortcut=False,
             s_scale=1.0,
+            num_inference_steps=config.num_inference_steps,
+            guidance_scale=config.guidance_scale,
+            strength=config.strength,
+            seed=config.diffusion_seed,
+            num_samples=1
+        )
+    else:
+        ip_model = IPAdapterFaceID(pipe, config.ip_portrait_path, config.device, num_tokens=16, n_cond=n_references)
+        images = ip_model.generate(
+            prompt=config.prompt,
+            negative_prompt=config.negative_prompt,
+            faceid_embeds=face_embeddings,
+            image=target_image['face_crop'],
+            mask_image=target_image['face_mask'],
             num_inference_steps=config.num_inference_steps,
             guidance_scale=config.guidance_scale,
             strength=config.strength,
